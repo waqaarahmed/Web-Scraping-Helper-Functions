@@ -5,7 +5,6 @@ from langchain.chat_models.openai import ChatOpenAI
 
 def questions(url_list, query):
 	openai = ChatOpenAI(
-		api_key="",
 		model_name = "gpt-4",
 		max_tokens = 2048
 		)
