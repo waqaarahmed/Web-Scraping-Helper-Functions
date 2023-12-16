@@ -1,9 +1,11 @@
 from langchain.document_loaders import WebBaseLoader
 from langchain.indexes import VectorstoreIndexCreator
-from langchain.chat_models.openai import ChatOpenAi
+from langchain.chat_models.openai import ChatOpenAI
+
 
 def questions(url_list, query):
-	openai = ChatOpenAi(
+	openai = ChatOpenAI(
+		api_key="",
 		model_name = "gpt-4",
 		max_tokens = 2048
 		)
@@ -18,10 +20,10 @@ def questions(url_list, query):
 	print(ans)
 
 url_list = [
-	"",
-	"",
-	"",
-	""
+	"https://restfulapi.net/",
+	"https://www.ibm.com/topics/rest-apis",
+	"https://www.redhat.com/en/topics/api/what-is-a-rest-api",
+	"https://www.geeksforgeeks.org/rest-api-introduction/"
 ]
 
 prompt = '''
