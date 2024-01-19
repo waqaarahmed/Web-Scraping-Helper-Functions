@@ -2,7 +2,8 @@ from bs4 import BeautifulSoup
 import requests 
 import os
 
-url = "https://havenly.com/exp/bedroom-design-ideas"
+#url = "https://havenly.com/exp/bedroom-design-ideas"
+url = input("Please Enter the URL address: ")
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 }
@@ -17,7 +18,7 @@ for img in x:
 #for l in links:
     #print(l)
 
-os.mkdir("bedroom_designs")
+'''os.mkdir("bedroom_designs")
 i = 1
 for index, img_link in enumerate(links):
     if i <= 100:
@@ -27,4 +28,4 @@ for index, img_link in enumerate(links):
         i += 1
     else:
         f.close()
-        break
+        break''' 
