@@ -4,17 +4,17 @@ import pandas as pd
 import requests 
 import os
 
-
-url = input("Enter URL: ")
-headers = {
+def get_url():
+    url = input("Enter URL: ")
+    headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
                 }
     
-response = requests.get(url, headers=headers)
-soup = BeautifulSoup(response.text, "html.parser")
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, "html.parser")
 
 
-def get_table():
+def get_table(soup):
     tables = []
     table_elements = soup.find_all('table')
     for table_element in table_elements:
@@ -36,7 +36,7 @@ def get_table():
         tables.append(table)
 
     return tables
-def save_to_csv(tables, file_name='output.csv'):
+def save_table_to_csv(tables, file_name='output.csv'):
     """
     Save tables to a CSV file.
     
@@ -48,3 +48,11 @@ def save_to_csv(tables, file_name='output.csv'):
         csv_writer = csv.writer(csvfile)
         for table in tables:
             csv_writer.writerows(table)
+
+def get_links(soup):
+    links = []
+    link_elements = soup.find_all('ahref')
+    for link_element in link_elements:
+        links.append('ahref')
+
+def save_links_to_csv(links, filename)
