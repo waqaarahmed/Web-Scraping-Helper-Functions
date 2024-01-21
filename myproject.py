@@ -36,7 +36,7 @@ def get_table(soup):
         tables.append(table)
 
     return tables
-def save_table_to_csv(tables, file_name='output.csv'):
+def save_table_to_csv(tables):
     """
     Save tables to a CSV file.
     
@@ -44,15 +44,42 @@ def save_table_to_csv(tables, file_name='output.csv'):
     - tables (list): A list of tables.
     - file_name (str): The name of the CSV file to save.
     """
+    file_name = input('Please Enter File Name: ')
     with open(file_name, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
         for table in tables:
             csv_writer.writerows(table)
 
+
+
 def get_links(soup):
     links = []
     link_elements = soup.find_all('ahref')
     for link_element in link_elements:
-        links.append('ahref')
+        links.append(link_element)
 
-def save_links_to_csv(links, filename)
+def save_links_to_csv(links):
+     filename = input('Please Enter File Name: ')
+     with open(filename, 'w', newline='') as f:
+         link_writer = csv.writer(f)
+         for link in links:
+             link_writer.writerow(link)
+
+
+
+def get_tags(soup):
+    tag_data = []
+    tag = input("Enter Tag: ")
+    tag_elements = soup.find_all(tag)
+    for tag_element in tag_elements:
+        tag_data.append(tag_element)
+
+def save_tags_to_csv(tag_data):
+    filename = input('Please Enter File Name: ')
+    with open(filename, 'w', newline='') as f:
+         tag_writer = csv.writer(f)
+         for tag in tag_data:
+             tag_writer.writerow(tag)
+
+def get_images(soup):
+    
