@@ -4,17 +4,16 @@ import pandas as pd
 import requests 
 import os
 
-def get_url():
-    url = input("Enter URL: ")
-    headers = {
+url = input("Enter URL: ")
+headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
                 }
     
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
+response = requests.get(url, headers=headers)
+soup = BeautifulSoup(response.text, "html.parser")
 
 
-def get_table(soup):
+def get_table():
     tables = []
     table_elements = soup.find_all('table')
     for table_element in table_elements:
@@ -37,13 +36,6 @@ def get_table(soup):
 
     return tables
 def save_table_to_csv(tables):
-    """
-    Save tables to a CSV file.
-    
-    Parameters:
-    - tables (list): A list of tables.
-    - file_name (str): The name of the CSV file to save.
-    """
     file_name = input('Please Enter File Name: ')
     with open(file_name, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
@@ -52,7 +44,7 @@ def save_table_to_csv(tables):
 
 
 
-def get_links(soup):
+def get_links():
     links = []
     link_elements = soup.find_all('ahref')
     for link_element in link_elements:
@@ -67,7 +59,7 @@ def save_links_to_csv(links):
 
 
 
-def get_tags(soup):
+def get_tags():
     tag_data = []
     tag = input("Enter Tag: ")
     tag_elements = soup.find_all(tag)
@@ -81,5 +73,22 @@ def save_tags_to_csv(tag_data):
          for tag in tag_data:
              tag_writer.writerow(tag)
 
-def get_images(soup):
-    
+def get_images():
+    images = []
+    image_elements = soup.select('img')
+    for image_element in image_elements:
+        images.append(image_element)
+    foldername = input('Enter Folder Name: ')
+    os.mkdir(foldername)
+    i = 1
+    for index, image_link in enumerate(images):
+        if i <= 1000:
+            image_data = requests.get(image_link).content
+            with open(foldername/+str(index+1)+'.jpg', 'wb+') as f:
+                f.write(image_data)
+            i += 1
+        else:
+            f.close()
+            break
+
+get_images()
