@@ -20,22 +20,15 @@ def get_table():
         table = []
         # Find all rows in the table
         rows = table_element.find_all('tr')
-
         for row in rows:
             # Find all cells in the row
             cells = row.find_all(['th', 'td'])
-            
             # Extract text from each cell and append to the row
             row_data = [cell.get_text(strip=True) for cell in cells]
-            
             # Append the row to the table
             table.append(row_data)
-
         # Append the table to the list of tables
         tables.append(table)
-
-    return tables
-def save_table_to_csv(tables):
     file_name = input('Please Enter File Name: ')
     with open(file_name, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
@@ -65,8 +58,6 @@ def get_tags():
     tag_elements = soup.find_all(tag)
     for tag_element in tag_elements:
         tag_data.append(tag_element)
-
-def save_tags_to_csv(tag_data):
     filename = input('Please Enter File Name: ')
     with open(filename, 'w', newline='') as f:
          tag_writer = csv.writer(f)
@@ -91,4 +82,5 @@ def get_images():
             f.close()
             break
 
-get_images()
+
+get_tags()
