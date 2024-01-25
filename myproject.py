@@ -3,6 +3,9 @@ import csv
 import pandas as pd
 import requests 
 import os
+from urllib.parse import urljoin, urlparse
+import base64
+import imghdr 
 
 url = input("Enter URL: ")
 headers = {
@@ -64,23 +67,66 @@ def get_tags():
          for tag in tag_data:
              tag_writer.writerow(tag)
 
-def get_images():
-    images = []
-    image_elements = soup.select('img')
-    for image_element in image_elements:
-        images.append(image_element)
-    foldername = input('Enter Folder Name: ')
-    os.mkdir(foldername)
-    i = 1
-    for index, image_link in enumerate(images):
-        if i <= 1000:
-            image_data = requests.get(image_link).content
-            with open(foldername/+str(index+1)+'.jpg', 'wb+') as f:
-                f.write(image_data)
-            i += 1
-        else:
-            f.close()
-            break
+
+def get_images(url, save_folder='images'):
+    if not os.path.exists(save_folder):
+        os.makedirs(save_folder)
+
+    # Fetch the HTML content of the web page
+    response = requests.get(url)
+    html_content = response.text
+
+    # Create BeautifulSoup object
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    saved_images = []
+
+    # Find all image elements
+    img_elements = soup.find_all('img')
+
+    for img_element in img_elements:
+        # Get the source (src) attribute of the image
+        img_src = img_element.get('src')
+
+        if img_src:
+            # Check if the source is a data URI
+            if img_src.startswith('data:image'):
+                # Handle data URI (base64-encoded image)
+                image_data = img_src.split(',')[1]
+                img_data = base64.b64decode(image_data)
+
+                # Generate a filename based on the image type (e.g., 'image/png')
+                img_type = imghdr.what(None, h=image_data)
+                if not img_type:
+                    img_type = 'png'  # Default to PNG if image type cannot be determined
+
+                img_filename = os.path.join(save_folder, f'image_{len(saved_images) + 1}.{img_type}')
+
+                # Save the image to the local filesystem
+                with open(img_filename, 'wb') as img_file:
+                    img_file.write(img_data)
+
+                saved_images.append(img_filename)
+            else:
+                # Make the URL absolute
+                img_url = urljoin(url, img_src)
+
+                # Get the image content
+                img_response = requests.get(img_url)
+
+                # Extract the filename from the URL
+                img_filename = os.path.join(save_folder, os.path.basename(urlparse(img_url).path))
+
+                # Save the image to the local filesystem
+                with open(img_filename, 'wb') as img_file:
+                    img_file.write(img_response.content)
+
+                saved_images.append(img_filename)
+
+    return saved_images
+    return saved_images
 
 
-get_tags()
+
+
+get_images(url)
