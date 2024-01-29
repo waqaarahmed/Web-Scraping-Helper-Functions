@@ -44,6 +44,10 @@ class App(ctk.CTk):
         self.fileEntry.grid(row=1, column=1,
                            columnspan=3, padx=20,
                            pady=20, sticky="ew")
+        
+        self.folder_label = ctk.CTkLabel(self, text="Save Folder:")
+        self.folder_label.grid(width=40, state="readonly")
+        self.folder_button = ctk.CTkButton(text="Browse", command=self.browse_folder)
  
         # Scrape Button
         self.scrapeButton = ctk.CTkButton(self,
