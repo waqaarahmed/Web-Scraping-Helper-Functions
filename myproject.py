@@ -46,9 +46,8 @@ def get_links():
     for link_element in link_elements:
         links.append(link_element)
 
-def save_links_to_csv(links):
-     filename = input('Please Enter File Name: ')
-     with open(filename, 'w', newline='') as f:
+    filename = input('Please Enter File Name: ')
+    with open(filename, 'w', newline='') as f:
          link_writer = csv.writer(f)
          for link in links:
              link_writer.writerow(link)
