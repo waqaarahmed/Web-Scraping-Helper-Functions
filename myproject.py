@@ -128,4 +128,4 @@ def get_images(url, save_folder='images'):
 
 
 
-get_images(url)
+get_tags()
