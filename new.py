@@ -11,12 +11,15 @@ options = Options()
 options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=options)
-driver.get("https://www.fruitlogistica.com/en/trade-visitors/exhibitor-search/#/search/f=h-entity_orga;v_sg=0;v_fg=0;v_fpa=FUTURE")
+driver.get("https://www.neuralnine.com/")
 driver.maximize_window()
 time.sleep(10)
 
-iframes = driver.find_elements(By.TAG_NAME, 'iframe')
-for iframe in iframes:
-        driver.switch_to.frame(iframe)
-        links = driver.find_element(By.XPATH, '//*[@id="uc-center-container"]/div[2]/div/div/div/div/button[2]')
-        print("Found it")
+links = driver.find_elements(By.XPATH, "//a[@href]")
+for link in links:
+    if "Books" in link.get_attribute("innerHTML"):
+        link.click()
+        break
+book_links = driver.find_elements(By.XPATH, "//div[contains(@class, 'elementor-coloumn-wrap')][.//h2[text()[contains(., '7 IN 1')]]]")
+for book_link in book_links:
+    print(book_link.get_attribute("innerHTML"))
