@@ -11,11 +11,21 @@ options = Options()
 options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                           options=options)
-driver.get("https://www.neuralnine.com/")
+driver.get("https://www.dnb.com/business-directory/company-information.waste_collection.us.texas.html")
 driver.maximize_window()
+time.sleep(20)
+
+accept_button = driver.find_element(By.XPATH, "//button[@id='truste-consent-button']")
+accept_button.click()
 time.sleep(5)
 
-links = driver.find_elements(By.XPATH, "//a[@href]")
+company_results = driver.find_elements(By.XPATH, "//div[@id='companyResults']")
+company_results = company_results.text
+for company_result in company_results:
+    print(company_result.get_attribute("innerHTML"))
+
+time.sleep(5)
+'''links = driver.find_elements(By.XPATH, "//a[@href]")
 for link in links:
     if "Books" in link.get_attribute("innerHTML"):
         link.click()
@@ -29,4 +39,4 @@ buttons = driver.find_elements(By.XPATH, "//a[.//span[text()[contains(., 'Paperb
 for button in buttons:
     print(button.get_attribute("innerHTML"))
 
-driver.close()
+driver.close()'''
