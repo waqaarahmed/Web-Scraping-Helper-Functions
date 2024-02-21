@@ -20,9 +20,9 @@ accept_button.click()
 time.sleep(5)
 
 company_results = driver.find_elements(By.XPATH, "//div[@id='companyResults']")
-company_results = company_results.text
 for company_result in company_results:
-    print(company_result.get_attribute("innerHTML"))
+    company_result_text = company_result.text
+    print(company_result_text)
 
 time.sleep(5)
 '''links = driver.find_elements(By.XPATH, "//a[@href]")
